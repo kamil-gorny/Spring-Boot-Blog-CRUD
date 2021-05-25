@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <div th:replace="/fragments/general :: head-options"/>
+</head>
+<body>
+
+<div th:replace="/fragments/general :: header"/>
+
+
+<div class="container">
+    <main role="main" class="pb-3 mt-5">
+        <h1 class="text-center">Posty</h1>
+        <div class="table--no-card m-b-40">
+            <table class="table table-bordered table-striped table-earning">
+                <thead>
+                <tr>
+                    <th scope="col">Post_Id</th>
+                    <th scope="col">Tytuł</th>
+                    <th scope="col">Treść Posta</th>
+                    <th scope="col">Akcje</th>
+
+                </tr>
+                </thead>
+                <tbody th:each="post: ${posts}">
+
+                <tr>
+                    <td><p th:text="${post.id}"></p></td>
+                    <td><a th:text="${post.title}" th:href="@{'/post/' + ${post.id}}"/></td>
+                    <td><h3 th:text="${post.content}"></h3></td>
+                    <td>     <a th:href="@{'/editPost/{id}'(id=${post.id})}" class="col-md-2 d-inline">
+                        <button type="button" class="btn btn-primary btn-block" th:text="Edytuj"></button>
+                    </a>
+                        <form action="#" th:action="@{'/post/{id}'(id=${post.id})}" th:method="delete"
+                              class="form-horizontal d-inline">
+                            <div class="form-group">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <button onclick="return confirm('Czy na pewno chcesz usunąć?');" type="submit" class="btn btn-danger btn-block" th:text="Usuń"></button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <h1 class="text-center">Komentarze</h1>
+        <div class="table--no-card m-b-40">
+            <table class="table table-bordered table-striped table-earning">
+                <thead>
+                <tr>
+                    <th scope="col">Post</th>
+                    <th scope="col">Treść komentarza</th>
+                    <th scope="col">Akcje</th>
+
+                </tr>
+                </thead>
+                <tbody th:each="comment: ${comments}">
+
+                <tr>
+                    <td><a th:text="${comment.getPost().getTitle()}" th:href="@{'/post/' + ${comment.getPost().getId()}}"></a></td>
+                    <td><p th:text="${comment.getContent()}"></td>
+                    <td>     <a th:href="@{'/editPost/{id}'(id=${comment.getPost().getId()})}" class="col-md-2 d-inline">
+                        <button type="button" class="btn btn-primary btn-block" th:text="Edytuj"></button>
+                    </a>
+                        <form action="#" th:action="@{'/post/{id}'(id=${comment.getPost().getId()})}" th:method="delete"
+                              class="form-horizontal d-inline">
+                            <div class="form-group">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <button onclick="return confirm('Czy na pewno chcesz usunąć?');" type="submit" class="btn btn-danger btn-block" th:text="Usuń"></button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

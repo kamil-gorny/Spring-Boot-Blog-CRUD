@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="posts">
+    <div th:each="post: ${posts}">
+        <div class="jumbotron jumbotron-fluid  bg-dark text-white mt-3">
+            <div class="container">
+                <h1 class="display-4"><a class="text-white" th:text="${post.title}" th:href="@{'/post/' + ${post.id}}"></a></h1>
+                <p class="lead">
+                <div th:text="'Storzony przez:'">
+                </div>
+                <div><a class="text-white" th:text="${post.user.username}" th:href="@{'/blog/' + ${post.user.username}}">User</a>
+                </p>
+                <p class="lead">
+                    <h3 th:text="${post.content}"></h3>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

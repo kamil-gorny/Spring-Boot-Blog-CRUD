@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="/fragments/general :: head-options"/>
+</head>
+<body>
+
+<div th:replace="/fragments/general :: header"/>
+
+<div class="container">
+
+    <div class="jumbotron mt-5 bg-dark text-white">
+        <h1 th:text="${post.title}">Title</h1>
+        <div th:text="'Stworzone przez: '">
+            <a th:text="${post.user.username}" th:href="@{'/blog/' + ${post.user.username}}"></a>
+        </div>
+
+        <h4 th:text="${post.content}">Body</h4>
+
+
+    </div>
+    <div>
+        <div class="row">
+            <a th:href="@{'/commentPost/{id}'(id=${post.id})}" class="col-md-2">
+                <button type="button" class="btn btn-dark btn-block" th:text="Skomentuj"></button>
+            </a>
+
+        </div>
+    </div>
+
+    <h2>Komentarze:</h2>
+    <div class="well" th:each="comment : ${post.comments}">
+        <div><h6 th:text="${comment.user.getUsername() == 'Admin' ? comment.getUsername()+':' : comment.user.getFirstName().charAt(0)+comment.user.getLastName()+':'}"></h6>
+        </div>
+        <p th:text="${comment.content}"></p>
+    </div>
+</div>
+</body>
+</html>
